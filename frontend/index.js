@@ -2,42 +2,20 @@
 const express = require("express");
 const app = express();
 
-const artist = require("./Routes/artist");
-const city = require("./Routes/city");
-const studio = require("./Routes/studio");
-
-// const pool = require("./queries");
+const artists = require("./Routes/artists");
+const locations = require("./Routes/locations");
+const studios = require("./Routes/studios");
 
 app.use(express.json());
 
-// app.use("/", home);
-app.use("/artist", artist);
-app.use("/studio", studio);
-app.use("/city", city);
+app.use("/artists", artists);
+app.use("/studios", studios);
+app.use("/locations", locations);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`"Listening on port ${port}..."`);
 });
-
-// app.get("/", (req, res) => {
-//   pool.query("SELECT * FROM artists", (error, results) => {
-//     if (error) {
-//       throw error;
-//     }
-//     res.status(200).send(results.rows);
-//   });
-// });
-
-// app.get("/:id", (req, res) => {
-//   const id = req.params.id;
-//   pool.query("SELECT * FROM artists WHERE id=$1", [id], (error, results) => {
-//     if (error) {
-//       throw error;
-//     }
-//     res.status(200).send(results.rows);
-//   });
-// });
 
 // const courses = [
 //   { id: 1, name: "course1" },
