@@ -1,11 +1,13 @@
 // const Joi = require("joi");
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const artists = require("./Routes/artists");
 const locations = require("./Routes/locations");
 const studios = require("./Routes/studios");
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/artists", artists);
