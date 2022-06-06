@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
-const URL = "http://localhost:3000/";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NavBar from "./NavBar";
+// const URL = "http://localhost:3000/";
 
 const App = () => {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch(URL + "artists")
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(URL + "artists")
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  // }, []);
 
-  const renderData = () => {
-    if (data) {
-      return <div>{data}</div>;
-    }
-  };
+  // const renderData = () => {
+  //   if (data) {
+  //     return <div>{data}</div>;
+  //   }
+  // };
 
   return (
-    <main>
-      <h1>React app with Webpack and Babel</h1>
-      <div>{renderData()}</div>
-    </main>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<NavBar />}></Route>
+      </Routes>
+    </Router>
   );
 };
 
