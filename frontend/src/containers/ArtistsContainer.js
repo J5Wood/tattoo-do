@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Artist from "../components/Artist";
-const URL = "http://localhost:3000/";
+const URL = "http://localhost:3000/artists";
 
 const Artists = () => {
   const [artists, setArtists] = useState(null);
 
   useEffect(() => {
-    fetch(URL + "artists")
+    fetch(URL)
       .then((resp) => resp.json())
       .then((data) => {
         setArtists(data);
