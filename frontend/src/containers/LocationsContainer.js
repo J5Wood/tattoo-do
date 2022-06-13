@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Location from "../components/Location";
-const URL = "http://localhost:3000/locations";
+import { useSelector, useDispatch } from "react-redux";
+import { addLocation, addNewLocation } from "../reducers/locationReducer";
+// const URL = "http://localhost:3000/locations";
 
 const LocationsContainer = () => {
-  const [locations, setLocations] = useState(null);
+  const locations = useSelector((state) => state.locations);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch(URL)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setLocations(data);
-      });
-  }, []);
+  // debugger;
+  // debugger;
+  // const [locations, setLocations] = useState(null);
+
+  // useEffect(() => {
+  //   fetch(URL)
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       setLocations(data);
+  //     });
+  // }, []);
 
   const renderLocations = () => {
     if (locations) {
