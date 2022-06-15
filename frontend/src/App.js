@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Locations from "./containers/LocationsContainer";
 import Studios from "./containers/StudiosContainer";
@@ -12,7 +12,7 @@ const App = () => {
     <Router>
       <NavBar />
       <Routes>
-        <Route exact path="/" element={<HomePage />}></Route>
+        <Route path="/*" element={<HomePage />}></Route>
         <Route exact path="/locations" element={<Locations />}></Route>
         <Route exact path="/studios" element={<Studios />}></Route>
         <Route exact path="/artists" element={<Artists />}></Route>

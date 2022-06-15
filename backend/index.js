@@ -7,6 +7,7 @@ const artists = require("./Routes/artists");
 const locations = require("./Routes/locations");
 const studios = require("./Routes/studios");
 
+// Need to configure cors once all routes are setup
 app.use(cors());
 app.use(express.json());
 
