@@ -1,38 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Location from "../components/Location";
-import { useSelector, useDispatch } from "react-redux";
-import { addLocation, addNewLocation } from "../reducers/locationReducer";
-// const URL = "http://localhost:3000/locations";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAllLocations,
+  fetchLocations,
+} from "../reducers/locationReducer";
 
 const LocationsContainer = () => {
-  const locations = useSelector((state) => state.locations);
-  const dispatch = useDispatch();
+  const locations = useSelector(selectAllLocations);
+  const error = useSelector((state) => state.locations.error);
+  const locationStatus = useSelector((state) => state.locations.status);
+  const dispatch = useDispatch;
 
-  // debugger;
-  // debugger;
-  // const [locations, setLocations] = useState(null);
-
-  // useEffect(() => {
-  //   fetch(URL)
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       setLocations(data);
-  //     });
-  // }, []);
-
-  const renderLocations = () => {
-    if (locations) {
-      const locationsList = locations.map((location) => {
-        return <Location locationData={location} key={location.id} />;
-      });
-      return locationsList;
+  useEffect(() => {
+    if (locationStatus === "idle") {
+      dispatch(fetchLocations());
     }
-  };
+  }, [locationStatus, dispatch]);
+
+  let content;
+
+  if (locationStatus === "loading") {
+    content = <h3>Loading...</h3>;
+  } else if (locationStatus === "succeeded") {
+    content = locations.map((location) => {
+      return <Location locationData={location} key={location.id} />;
+    });
+  } else if (locationStatus === "failed") {
+    content = <div>{error}</div>;
+  }
 
   return (
     <div>
       <h1>Locations</h1>
-      {renderLocations()}
+      {content}
     </div>
   );
 };
