@@ -1,22 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Location from "../components/Location";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectAllLocations,
-  fetchLocations,
-} from "../reducers/locationReducer";
+import { useSelector } from "react-redux";
+import { selectAllLocations } from "../reducers/locationReducer";
 
 const LocationsContainer = () => {
   const locations = useSelector(selectAllLocations);
   const error = useSelector((state) => state.locations.error);
   const locationStatus = useSelector((state) => state.locations.status);
-  const dispatch = useDispatch;
-
-  useEffect(() => {
-    if (locationStatus === "idle") {
-      dispatch(fetchLocations());
-    }
-  }, [locationStatus, dispatch]);
 
   let content;
 

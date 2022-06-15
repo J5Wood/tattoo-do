@@ -19,12 +19,12 @@ export const locationSlice = createSlice({
   name: "location",
   initialState,
   reducers: {
-    addNewLocation: (state, action) => {
-      console.log("Add one new location");
-    },
-    removeLocation: (state) => {
-      console.log("Remove some location state");
-    },
+    // addNewLocation: (state, action) => {
+    //   console.log("Add one new location");
+    // },
+    // removeLocation: (state) => {
+    //   console.log("Remove some location state");
+    // },
   },
   extraReducers(builder) {
     builder
@@ -42,8 +42,8 @@ export const locationSlice = createSlice({
   },
 });
 
-export const { addLocation, addNewLocation, removeLocation } =
-  locationSlice.actions;
+// export const { addLocation, addNewLocation, removeLocation } =
+//   locationSlice.actions;
 
 export default locationSlice.reducer;
 

@@ -1,33 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Artist from "../components/Artist";
-const URL = "http://localhost:3000/artists";
+import { useSelector } from "react-redux";
+import { selectAllArtists } from "../reducers/artistReducer";
 
-const Artists = () => {
-  const [artists, setArtists] = useState(null);
+const ArtistsContainer = () => {
+  const artists = useSelector(selectAllArtists);
+  const error = useSelector((state) => state.artists.error);
+  const artistStatus = useSelector((state) => state.artists.status);
 
-  useEffect(() => {
-    fetch(URL)
-      .then((resp) => resp.json())
-      .then((data) => {
-        setArtists(data);
-      });
-  }, []);
+  let content;
 
-  const renderArtists = () => {
-    if (artists) {
-      const artistList = artists.map((artist) => {
-        return <Artist artistData={artist} key={artist.id} />;
-      });
-      return artistList;
-    }
-  };
+  if (artistStatus === "loading") {
+    content = <h3>Loading...</h3>;
+  } else if (artistStatus === "succeeded") {
+    content = artists.map((artist) => {
+      return <Artist artistData={artist} key={artist.id} />;
+    });
+  } else if (artistStatus === "failed") {
+    content = <div>{error}</div>;
+  }
 
   return (
-    <>
-      <h1>Artists</h1>
-      {renderArtists()}
-    </>
+    <div>
+      <h1>artists</h1>
+      {content}
+    </div>
   );
 };
 
-export default Artists;
+export default ArtistsContainer;

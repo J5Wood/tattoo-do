@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Studio from "../components/Studio";
-const URL = "http://localhost:3000/studios";
+import { useSelector } from "react-redux";
+import { selectAllStudios } from "../reducers/studioReducer";
 
 const StudiosContainer = () => {
-  const [studios, setStudios] = useState(null);
+  const studios = useSelector(selectAllStudios);
+  const error = useSelector((state) => state.studios.error);
+  const studioStatus = useSelector((state) => state.studios.status);
 
-  useEffect(() => {
-    fetch(URL)
-      .then((resp) => resp.json())
-      .then((data) => setStudios(data));
-  }, []);
+  let content;
 
-  const renderStudios = () => {
-    if (studios) {
-      return studios.map((studio) => {
-        return <Studio studioData={studio} key={studio.id} />;
-      });
-    }
-  };
+  if (studioStatus === "loading") {
+    content = <h3>Loading...</h3>;
+  } else if (studioStatus === "succeeded") {
+    content = studios.map((studio) => {
+      return <Studio studioData={studio} key={studio.id} />;
+    });
+  } else if (studioStatus === "failed") {
+    content = <div>{error}</div>;
+  }
 
   return (
-    <>
+    <div>
       <h1>Studios</h1>
-      {renderStudios()}
-    </>
+      {content}
+    </div>
   );
 };
 
