@@ -1,5 +1,6 @@
 import React from "react";
 import Artist from "../components/Artist";
+import ArtistForm from "./ArtistForm";
 import { useSelector } from "react-redux";
 import { selectAllArtists } from "../reducers/artistReducer";
 
@@ -22,8 +23,9 @@ const ArtistsContainer = () => {
 
   return (
     <div>
-      <h1>artists</h1>
+      <h1>Artists</h1>
       {content}
+      <ArtistForm />
     </div>
   );
 };
