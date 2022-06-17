@@ -38,3 +38,11 @@ export const artistSlice = createSlice({
 export default artistSlice.reducer;
 
 export const selectAllArtists = (state) => state.artists.artists;
+
+export const selectAllStyles = (state) => {
+  const styles = new Set();
+  for (let artist of state.artists.artists) {
+    styles.add(artist.style);
+  }
+  return styles;
+};
