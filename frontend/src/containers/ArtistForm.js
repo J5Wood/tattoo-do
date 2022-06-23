@@ -1,14 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectAllLocations } from "../reducers/locationReducer";
 import { selectAllStudios } from "../reducers/studioReducer";
-import { selectAllStyles } from "../reducers/artistReducer";
+import { selectAllStyles, addNewArtist } from "../reducers/artistReducer";
 
 const ArtistForm = () => {
   const locations = useSelector(selectAllLocations);
   const studios = useSelector(selectAllStudios);
   const styles = useSelector(selectAllStyles);
-  const newStyleInput = document.getElementById("new-style");
+  const dispatch = useDispatch();
 
   const renderLocations = () => {
     return locations.map((location) => {
@@ -34,7 +34,7 @@ const ArtistForm = () => {
     const styleSelections = [<option key="none"></option>];
     for (let val of styles) {
       styleSelections.push(
-        <option value="val" key="val">
+        <option value={val} key={val}>
           {val}
         </option>
       );
@@ -44,9 +44,11 @@ const ArtistForm = () => {
   };
 
   const handleStyleChange = (e) => {
+    const newStyleInput = document.getElementById("new-style");
     if (e.target.value === "Add New Style") {
       newStyleInput.style.display = "";
     } else {
+      // debugger;
       newStyleInput.style.display = "none";
     }
   };
@@ -55,10 +57,17 @@ const ArtistForm = () => {
     e.preventDefault();
 
     const name = e.target.children[2].value;
-    const style = e.target.children[4].value;
-    const city = e.target.children[6].value;
-    const studio = e.target.children[8].value;
+    const style = (() => {
+      if (e.target.children[4].value === "Add New Style") {
+        return e.target.children[5].value;
+      } else {
+        return e.target.children[4].value;
+      }
+    })();
+    const city = e.target.children[7].value;
+    const studio = e.target.children[9].value;
     debugger;
+    dispatch(addNewArtist({ name, style, city, studio }));
   };
 
   const displayNone = {

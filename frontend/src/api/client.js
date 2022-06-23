@@ -16,9 +16,13 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
 
   let data;
   try {
+    debugger;
     const response = await window.fetch(endpoint, config);
+    debugger;
     data = await response.json();
+    debugger;
     if (response.ok) {
+      debugger;
       // Return a result object similar to Axios
       return {
         status: response.status,
@@ -29,6 +33,7 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
     }
     throw new Error(response.statusText);
   } catch (err) {
+    debugger;
     return Promise.reject(err.message ? err.message : data);
   }
 }

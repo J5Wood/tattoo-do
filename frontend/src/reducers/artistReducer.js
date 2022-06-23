@@ -15,6 +15,17 @@ export const fetchArtists = createAsyncThunk(
   }
 );
 
+export const addNewArtist = createAsyncThunk(
+  "artists/addNewArtist",
+  async (newArtist) => {
+    const response = await client.post(
+      "http://localhost:3000/artists",
+      newArtist
+    );
+    return response.data;
+  }
+);
+
 export const artistSlice = createSlice({
   name: "artist",
   initialState,
@@ -29,6 +40,21 @@ export const artistSlice = createSlice({
         state.artists = state.artists.concat(action.payload);
       })
       .addCase(fetchArtists.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(addNewArtist.pending, (state, action) => {
+        debugger;
+        state.status = "loading";
+      })
+      .addCase(addNewArtist.fulfilled, (state, action) => {
+        debugger;
+        state.status = "succeeded";
+        console.log(action.payload);
+        state.artists.push(action.payload);
+      })
+      .addCase(addNewArtist.rejected, (state, action) => {
+        debugger;
         state.status = "failed";
         state.error = action.error.message;
       });
